@@ -1,0 +1,29 @@
+package com.board.paging.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.board.board.vo.BoardVo;
+
+@Mapper
+public interface BoardPagingMapper {
+
+	int count(BoardVo boardvo);
+
+	List<BoardVo> getBoardPagingList(String menu_id, String title, String writer, String content, int offset,
+			int recordSize);
+
+	void incHit(BoardVo boardVo);
+
+	BoardVo getBoard(BoardVo boardVo);
+
+	void insertMapper(BoardVo boardVo);
+
+	void updateMapper(BoardVo boardVo);
+
+	void deleteMaper(BoardVo boardVo);
+
+	int ccount(BoardVo boardVo);
+
+}

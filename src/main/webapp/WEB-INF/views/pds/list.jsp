@@ -42,30 +42,32 @@
 <body>
 	<main>  
 	<%@include file="/WEB-INF/include/menus2.jsp" %>
-	  <h2>${menu_name} 게시물 목록 (${sessionScope.login.userid })</h2>
+	  <h2>${menu_name} 자료실 목록 </h2>
 	  <table id="table">
 	    <tr>
 	      <td>번호</td>
 	      <td>제목</td>
 	      <td>작성자</td>
+	      <td>파일수</td>
 	      <td>작성일</td>
 	      <td>조회수</td>
 
 	    </tr>
 	    <tr>
-	      <td colspan="5">
-	        [<a href="/BoardPaging/WriteForm?menu_id=${menu_id}&nowpage=${nowpage}">새 글 추가</a>]&nbsp;&nbsp;&nbsp;	      	      
+	      <td colspan="6">
+	        [<a href="/Pds/WriteForm?menu_id=${menu_id}&nowpage=${nowpage}">새 글 추가</a>]&nbsp;&nbsp;&nbsp;	      	      
 	        [<a href="/">HOME</a>]&nbsp;		      	      
 	      </td>
 	    </tr>
 
-	    <c:forEach var="board" items="${ response.list }">
+	    <c:forEach var="pds" items="${ pdsList }">
 	     <tr>
-	    <td>${board.idx}</td>
-	    <td><a href="/BoardPaging/View?idx=${board.idx}&nowpage=${nowpage}&menu_id=${menu_id}">${board.title}</a></td>
-	    <td>${board.writer}</td>
-	    <td>${board.regdate}</td>
-	    <td>${board.hit}</td>
+	    <td>${pds.idx}</td>
+	    <td><a href="/Pds/View?idx=${pds.idx}&nowpage=${map.nowpage}&menu_id=${map.menu_id}">${pds.title}</a></td>
+	    <td>${pds.writer}</td>
+	    <td>${pds.filescount}</td>
+	    <td>${pds.regdate}</td>
+	    <td>${pds.hit}</td>
              </tr>
 	    </c:forEach>
 	    

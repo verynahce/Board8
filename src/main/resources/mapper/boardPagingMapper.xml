@@ -25,7 +25,7 @@ SELECT IDX,
        TO_CHAR(REGDATE, 'YYYY-MM-DD') REGDATE ,
        HIT 
 FROM   BOARD
-  <where>
+  	  <where>
       <if test ="arg0 != null and arg0 != ''" >
        AND MENU_ID = #{arg0} 
       </if>
@@ -39,8 +39,8 @@ FROM   BOARD
        AND CONTENT = #{arg3} 
        </if> 
   </where>
- ORDER BY IDX DESC
- OFFSET #{arg4} ROWS FETCH NEXT #{arg5} ROWS ONLY  
+  	 ORDER BY B.IDX DESC  
+     OFFSET #{arg4} ROWS FETCH NEXT #{arg5} ROWS ONLY  
 </select>
 
  <update id="incHit">

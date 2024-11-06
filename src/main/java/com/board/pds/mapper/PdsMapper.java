@@ -10,7 +10,13 @@ import com.board.pds.vo.PdsVo;
 @Mapper
 public interface PdsMapper {
 
-	List<PdsVo> getpdsList(HashMap<String, Object> map);
+	List<PdsVo> getPdsList(HashMap<String, Object> map);
+
+	void setWriter(HashMap<String, Object> map);
+
+	void setFileWriter(HashMap<String, Object> map);
+
+	int count(String menu_id);
 
 	
 }

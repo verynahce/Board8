@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.pds.mapper.PdsMapper">  
+
+<!-- ${search}  숫자 그냥 표시,문자도 그냥 표시 -->
+<!-- #{searchtext} 숫자 그냥 표시,문자는 '' 표시 -->
+  <select id="getPdsList" >
+
+  	 SELECT    B.IDX,
+  	           B.TITLE,
+  	           B.WRITER,    
+  	           (SELECT COUNT(*)
+  	           FROM FILES F
+  	           WHERE B.IDX = F.IDX) AS FILESCOUNT,
+  	           TO_CHAR(B.REGDATE,'YYYY-MM-DD') AS REGDATE,  	           
+  	           B.HIT
+  	 FROM      BOARD B    
+        <where>
+      <if test ="menu_id != null and menu_id != ''" >
+       AND  B.MENU_ID = #{menu_id} 
+      </if>
+      <if test ="search != null and search != ''" >
+       AND  ${search} LIKE '%' ||  #{ searchtext }|| '%' 
+      </if>  
+ 
+  </where>
+  ORDER BY IDX DESC
+  OFFSET #{offset} ROWS FETCH NEXT #{recordSize} ROWS ONLY  
+  </select>
+  
+  
+ 
+  
+  <insert id="setWriter">
+	INSERT INTO BOARD (
+    IDX,
+    MENU_ID,
+    TITLE,
+    CONTENT,
+    WRITER
+	) VALUES (
+	(SELECT NVL(MAX(IDX),0)+1 FROM BOARD),#{menu_id},#{title},#{content},#{writer})
+  </insert>
+  
+  <insert id="setFileWriter">
+  <foreach collection="fileList" item="file" index="i" 
+         open="INSERT ALL" 
+         close="SELECT * FROM DUAL" 
+         separator="">
+    INTO FILES VALUES (
+        (SELECT NVL(MAX(FILE_NUM), 0) FROM FILES) + #{i} + 1,
+        (SELECT NVL(MAX(IDX), 0)  FROM BOARD),
+        #{file.filename},
+        #{file.fileext},
+        #{file.sfilename}
+     )
+</foreach>
+  
+  
+  </insert>
+  
+  <select id="count">
+   SELECT COUNT(*) AS CNT
+   FROM BOARD
+   WHERE MENU_ID = #{ menu_id }
+  </select>
+  
+  
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -23,6 +23,8 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		// 제외 "/css/**", "/img/**","/js/**" 경로는 interceptor의 대상아님
 		//.addPathPatterns("/Board/**")
 		// http://localhost:9090/Board/** 밑에 모든 파일
+		
+		
 		registry.addInterceptor(authintercepter)
 		      //   .addPathPatterns("/**")
 		         .addPathPatterns("/BoardPaging/**","/Board/**")
